@@ -1,0 +1,29 @@
+<mat-toolbar color="primary">
+  @if (layoutCoreService.hasMenu()) {
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+            (click)="layoutCoreService.switchMenu()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  }
+  @if (layoutCoreService.hasBackButton()) {
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+            (click)="layoutCoreService.back()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  }
+  <span>{{ layoutCoreService.title() }}</span>
+  <span class="example-spacer"></span>
+  @if (layoutCoreService.firstButtonIcon()) {
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon"
+            (click)="layoutCoreService.firstButtonAction()">
+      <mat-icon>{{ layoutCoreService.firstButtonIcon() }}</mat-icon>
+    </button>
+  }
+  @if (layoutCoreService.firstButtonIcon()) {
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"
+            (click)="layoutCoreService.secondButtonAction()">
+      <mat-icon>{{ layoutCoreService.secondButtonIcon() }}</mat-icon>
+    </button>
+  }
+</mat-toolbar>
+<ng-content/>
