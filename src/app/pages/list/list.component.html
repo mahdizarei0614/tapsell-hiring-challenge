@@ -1,3 +1,22 @@
-@for (task of tasks$ | async; track task.date) {
-  <p>{{ task.title }}</p>
+@if (tasks$ | async; as tasks) {
+  @if (tasks) {
+    @for (task of tasks; track task.date) {
+      <task [data]="task" (checkChange)="checkChange($event, task)"
+            (updatedTask)="reloadTasks()"/>
+    } @empty {
+      <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-2 items-center">
+        <mat-icon inline class="!text-6xl text-gray-500">list</mat-icon>
+        <span class="text-2xl text-gray-500">No Task Yet</span>
+      </div>
+    }
+  }
+}
+
+@if (error$ | async; as error) {
+  @if (error.error) {
+    <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-2 items-center">
+      <mat-icon inline class="!text-6xl text-gray-500">error</mat-icon>
+      <span class="text-2xl text-gray-500">Error Occurred</span>
+    </div>
+  }
 }

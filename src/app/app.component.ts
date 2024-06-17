@@ -1,6 +1,13 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  Inject,
+  PLATFORM_ID,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MainContainerComponent } from './core/components/main-container/main-container.component';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +17,9 @@ import { MainContainerComponent } from './core/components/main-container/main-co
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'tapsell-hiring-challenge';
+  constructor(@Inject(PLATFORM_ID) platformId: object) {
+    isBrowser.set(isPlatformBrowser(platformId));
+  }
 }
+
+export const isBrowser: WritableSignal<boolean> = signal(false);

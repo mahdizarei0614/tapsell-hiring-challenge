@@ -11,7 +11,6 @@ export class LayoutCoreService {
   title: WritableSignal<string> = signal('');
   hasMenu: WritableSignal<boolean> = signal(false);
   hasBackButton: WritableSignal<boolean> = signal(false);
-  menuOpened: WritableSignal<boolean> = signal(false);
   firstButtonIcon: WritableSignal<string> = signal('');
   firstButtonAction: WritableSignal<() => void> = signal(() => {
     return;
@@ -20,10 +19,6 @@ export class LayoutCoreService {
   secondButtonAction: WritableSignal<() => void> = signal(() => {
     return;
   });
-
-  switchMenu(force?: boolean | undefined) {
-    this.menuOpened.set(force === undefined ? !this.menuOpened() : force);
-  }
 
   back() {
     this._$location.back();

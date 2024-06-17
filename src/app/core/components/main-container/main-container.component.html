@@ -1,29 +1,78 @@
-<mat-toolbar color="primary">
-  @if (layoutCoreService.hasMenu()) {
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
-            (click)="layoutCoreService.switchMenu()">
-      <mat-icon>menu</mat-icon>
-    </button>
-  }
-  @if (layoutCoreService.hasBackButton()) {
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
-            (click)="layoutCoreService.back()">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-  }
-  <span>{{ layoutCoreService.title() }}</span>
-  <span class="example-spacer"></span>
-  @if (layoutCoreService.firstButtonIcon()) {
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon"
-            (click)="layoutCoreService.firstButtonAction()">
-      <mat-icon>{{ layoutCoreService.firstButtonIcon() }}</mat-icon>
-    </button>
-  }
-  @if (layoutCoreService.firstButtonIcon()) {
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"
-            (click)="layoutCoreService.secondButtonAction()">
-      <mat-icon>{{ layoutCoreService.secondButtonIcon() }}</mat-icon>
-    </button>
-  }
-</mat-toolbar>
-<ng-content/>
+<mat-sidenav-container class="block h-full">
+  <mat-sidenav #drawer>
+    <mat-toolbar>
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+              (click)="drawer.toggle()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <span>
+      Lists
+      </span>
+      <span class="grow"></span>
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+              (click)="openAddListDialog()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-toolbar>
+    <mat-nav-list>
+      @for (list of lists$ | async; track list) {
+        <a mat-list-item (click)="navigateToList(drawer, list)"
+           href="javascript:void(0)"
+           class="flex text-start"
+           [activated]="list.isActive">
+          <div class="flex items-center">
+
+          <span>
+          {{ (list.title + ' list') | capitalizeFirstLetters }}</span>
+            <div class="grow"></div>
+            <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()"
+                    aria-label="Example icon-button with a menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+          </div>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item disabled>
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
+            <button mat-menu-item aria-label="Edit Task" (click)="openEditListDialog(list)">
+              <mat-icon>edit</mat-icon>
+              <span>Edit</span>
+            </button>
+          </mat-menu>
+        </a>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      @if (layoutCoreService.hasMenu()) {
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+                (click)="drawer.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      }
+      @if (layoutCoreService.hasBackButton()) {
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+                (click)="layoutCoreService.back()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      }
+      <span>{{ layoutCoreService.title() }}</span>
+      <span class="grow"></span>
+      @if (layoutCoreService.secondButtonIcon()) {
+        <button mat-icon-button aria-label="Example icon-button with share icon"
+                (click)="layoutCoreService.secondButtonAction()()">
+          <mat-icon>{{ layoutCoreService.secondButtonIcon() }}</mat-icon>
+        </button>
+      }
+      @if (layoutCoreService.firstButtonIcon()) {
+        <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon"
+                (click)="layoutCoreService.firstButtonAction()()">
+          <mat-icon>{{ layoutCoreService.firstButtonIcon() }}</mat-icon>
+        </button>
+      }
+    </mat-toolbar>
+    <ng-content/>
+  </mat-sidenav-content>
+</mat-sidenav-container>

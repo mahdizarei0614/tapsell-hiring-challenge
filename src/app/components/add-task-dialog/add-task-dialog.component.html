@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Add Task</h2>
+<mat-dialog-content>
+  <mat-form-field class="w-full">
+    <mat-label>Task Title</mat-label>
+    <input matInput [(ngModel)]="title"/>
+  </mat-form-field>
+  <mat-form-field class="w-full">
+    <mat-label>Task Description (optional)</mat-label>
+    <textarea matInput [(ngModel)]="description"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="close()">Close</button>
+  @if (data.date) {
+    <button mat-button (click)="editTask()">Edit</button>
+  } @else {
+    <button mat-button (click)="addTask()">Add</button>
+  }
+</mat-dialog-actions>

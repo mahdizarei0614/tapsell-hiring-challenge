@@ -76,12 +76,4 @@ export class LayoutService {
   private _setSecondButtonAction(secondButtonAction: () => void) {
     this._layoutCoreService.secondButtonAction.set(secondButtonAction);
   }
-
-  switchMenu(force?: boolean | undefined) {
-    this._layoutCoreService.switchMenu(force);
-  }
-
-  isMenuOpened() {
-    return this._layoutCoreService.menuOpened();
-  }
 }
